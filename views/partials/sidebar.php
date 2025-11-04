@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/public/register.php" class="nav-link">
+                    <a href="/register.php" class="nav-link">
                         <i class="nav-icon fas fa-user-plus"></i>
                         <p>Register</p>
                     </a>

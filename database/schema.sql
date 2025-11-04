@@ -2,8 +2,8 @@
 -- It creates the database, tables, and relationships for the MDCVSA project.
 
 -- Create the database if it doesn't exist and set it as the current database
-CREATE DATABASE IF NOT EXISTS `mdcvsa` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `mdcvsa`;
+CREATE DATABASE IF NOT EXISTS `MDCVSA2` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `MDCVSA2`;
 
 --
 -- Table structure for table `persons`
@@ -23,6 +23,7 @@ CREATE TABLE `persons` (
   `dob` date NOT NULL,
   `cell_phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`person_id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
