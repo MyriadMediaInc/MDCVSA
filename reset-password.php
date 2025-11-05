@@ -1,5 +1,5 @@
 <?php
-require 'config/database.php';
+require 'config/Database.php'; // Corrected path
 
 $token = $_GET['token'] ?? '';
 $message = '';
