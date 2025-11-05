@@ -1,33 +1,30 @@
 <?php
 
+namespace App;
+
+use App\Database;
+
 class Person
 {
     private $conn;
 
-    public function __construct($dbConnection)
+    public function __construct()
     {
-        $this->conn = $dbConnection;
+        $this->conn = Database::getInstance()->getConnection();
     }
 
-    /**
-     * Find a person by their email address.
-     * 
-     * @param string $email The email address to search for.
-     * @return array|false The person data as an associative array, or false if not found.
-     */
-    public function findByEmail($email)
+    public function getAll()
     {
-        $sql = "SELECT * FROM persons WHERE email = :email";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['email' => $email]);
-        return $stmt->fetch();
+        $stmt = $this->conn->prepare("SELECT * FROM persons");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    /**
-     * In the future, we can add other person-related methods here, like:
-     * - findById(id)
-     * - create(data)
-     * - update(id, data)
-     * - etc.
-     */
+    public function getById($id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM persons WHERE id = :id");
+        $stmt->bindParam(\':id\', $id);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
 }
