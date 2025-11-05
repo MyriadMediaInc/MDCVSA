@@ -1,10 +1,9 @@
 <?php
-// The AdminLTE header and sidebar would typically be included here.
-// For this example, we'll create a self-contained page.
-// We assume the user is authenticated as an admin.
+// views/pages/admin/people_list.php
 
-include __DIR__ . '/../shared/admin_header.php';
-include __DIR__ . '/../shared/admin_sidebar.php';
+// Corrected include paths based on the project structure
+include __DIR__ . '/../../partials/header.php';
+include __DIR__ . '/../../partials/sidebar.php';
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -18,7 +17,7 @@ include __DIR__ . '/../shared/admin_sidebar.php';
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/admin/dashboard.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/mdcvsa/index.php">Home</a></li>
                         <li class="breadcrumb-item active">People List</li>
                     </ol>
                 </div>
@@ -35,7 +34,7 @@ include __DIR__ . '/../shared/admin_sidebar.php';
                         <div class="card-header">
                             <h3 class="card-title">Registered People</h3>
                              <div class="card-tools">
-                                <a href="/register.php" class="btn btn-success">
+                                <a href="/mdcvsa/register.php" class="btn btn-success">
                                     <i class="fas fa-plus"></i> Add New Person
                                 </a>
                             </div>
@@ -75,8 +74,8 @@ include __DIR__ . '/../shared/admin_sidebar.php';
 <!-- /.content-wrapper -->
 
 <?php
-// Assumes a shared footer file that includes all the necessary JS
-include __DIR__ . '/../shared/admin_footer.php';
+// Corrected include path for the footer
+include __DIR__ . '/../../partials/footer.php';
 ?>
 
 <!-- Page specific scripts -->
@@ -87,7 +86,7 @@ $(function () {
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "/api/get_people.php",
+            "url": "/mdcvsa/api/get_people.php", // Corrected URL
             "type": "POST"
         },
 
@@ -122,10 +121,10 @@ $(function () {
                 "orderable": false,
                 "searchable": false,
                 "render": function(data, type, row) {
-                    // NOTE: The links for view/edit are placeholders for now
+                    // Corrected URLs for actions
                     return `
-                        <a href="/admin/person_view.php?id=${data}" class="btn btn-xs btn-primary" title="View"><i class="fas fa-eye"></i></a>
-                        <a href="/admin/person_edit.php?id=${data}" class="btn btn-xs btn-info" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a href="/mdcvsa/admin/person_view.php?id=${data}" class="btn btn-xs btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <a href="/mdcvsa/admin/person_edit.php?id=${data}" class="btn btn-xs btn-info" title="Edit"><i class="fas fa-edit"></i></a>
                         <a href="#" class="btn btn-xs btn-danger" title="Delete" onclick="deletePerson(${data})"><i class="fas fa-trash"></i></a>
                     `;
                 }
@@ -159,7 +158,7 @@ function deletePerson(id) {
     if(confirm('Are you sure you want to delete person #' + id + '?')) {
         // AJAX call to a delete script would go here
         console.log('Deleting person', id);
-        // E.g., $.post('/api/delete_person.php', { id: id }, ...);
+        // E.g., $.post('/mdcvsa/api/delete_person.php', { id: id }, ...);
         // On success, you would reload the table: $('#peopleTable').DataTable().ajax.reload();
     }
 }
