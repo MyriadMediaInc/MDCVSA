@@ -39,9 +39,18 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="alert alert-info">Testing layout file. If you see this, the layout is working. The error is in the content view file itself.</div>
-                <h1>Content Area</h1>
-                <p>The variable $contentView is set to: <?php echo htmlspecialchars($contentView ?? 'Not Set'); ?></p>
+                <?php
+                // Check if the content view is valid. If not, display an error.
+                if (!isset($contentView) || !file_exists($contentView)) {
+                    echo '<div class="alert alert-danger"><strong>Error:</strong> Content view file is not defined or cannot be found.</div>';
+                } else {
+                    // If view-specific data exists, extract it for the view to use
+                    if (isset($viewData) && is_array($viewData)) {
+                        extract($viewData);
+                    }
+                    include $contentView;
+                }
+                ?>
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->

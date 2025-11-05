@@ -14,6 +14,19 @@ if (class_exists(Dotenv::class)) {
     error_log('Dotenv class not found. Please run "composer install".');
 }
 
+// --- FIX: Define BASE_URL --- //
+// This dynamically creates the base URL, so it works on any server.
+// It creates a URL like 'http://13.222.190.11/mdcvsa'
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
+$host = $_SERVER['HTTP_HOST'];
+// Assumes the entry point (e.g., index.php) is in a subdirectory of the web root.
+// dirname($_SERVER['SCRIPT_NAME']) gets the directory part of the URL.
+$script_dir = dirname($_SERVER['SCRIPT_NAME']);
+// If the script is in the root, dirname might return '/' or '\'. In that case, we want an empty string.
+$base_path = ($script_dir === '/' || $script_dir === '\\') ? '' : $script_dir;
+define('BASE_URL', $protocol . $host . $base_path);
+// --- END FIX ---
+
 try {
     // The autoloader knows where to find the Database class now.
     $db = Database::getInstance()->getConnection();
