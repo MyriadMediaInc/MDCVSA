@@ -59,7 +59,7 @@ if ($isLoggedIn) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/mdcvsa/admin/people_list.php" class="nav-link">
+                        <a href="/mdcvsa/public/admin/people_list.php" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>People</p>
                         </a>
