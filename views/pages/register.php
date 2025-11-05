@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
@@ -22,20 +24,6 @@
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
-
-      <?php if (!empty($errors)) : ?>
-        <div class="alert alert-danger">
-            <?php foreach ($errors as $error) : ?>
-                <p><?php echo htmlspecialchars($error); ?></p>
-            <?php endforeach; ?>
-        </div>
-      <?php endif; ?>
-
-      <?php if ($success_message) : ?>
-        <div class="alert alert-success">
-            <p><?php echo htmlspecialchars($success_message); ?></p>
-        </div>
-      <?php endif; ?>
 
       <form action="register.php" method="post">
         <div class="input-group mb-3">
@@ -98,7 +86,44 @@
 <script src="vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="vendor/almasaeed2010/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- AdminLTE App -->
 <script src="vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+
+<script>
+$(function() {
+    // Check for PHP error messages
+    <?php if (!empty($errors)): ?>
+        var errorHtml = '<ul class="text-left">' +
+            <?php foreach ($errors as $error): ?>
+                '<li><?php echo htmlspecialchars($error); ?></li>' +
+            <?php endforeach; ?>
+        '</ul>';
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            html: errorHtml,
+            confirmButtonText: 'Try Again'
+        });
+    <?php endif; ?>
+
+    // Check for PHP success message
+    <?php if (!empty($success_message)): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful!',
+            text: '<?php echo htmlspecialchars($success_message); ?>',
+            showConfirmButton: false,
+            timer: 2000 // Auto-close after 2 seconds
+        }).then(() => {
+            // Optionally, redirect after the alert closes
+            // window.location.href = 'login.php';
+        });
+    <?php endif; ?>
+});
+</script>
+
 </body>
 </html>
