@@ -33,13 +33,13 @@
                     <dd class="col-sm-8"><?= htmlspecialchars($user['email']) ?></dd>
 
                     <dt class="col-sm-4">Date of Birth</dt>
-                    <dd class="col-sm-8"><?= htmlspecialchars($player['dob'] ?? 'N/A') ?></dd>
+                    <dd class="col-sm-8"><?= htmlspecialchars($user['dob'] ?? 'N/A') ?></dd>
 
                     <dt class="col-sm-4">Mailing Address</dt>
-                    <dd class="col-sm-8"><?= htmlspecialchars($player['address_1'] ?? 'N/A') ?></dd>
+                    <dd class="col-sm-8"><?= htmlspecialchars($user['address_1'] ?? 'N/A') ?></dd>
 
                     <dt class="col-sm-4">City, State, Zip</dt>
-                    <dd class="col-sm-8"><?= htmlspecialchars(($player['city'] ?? 'N/A') . ', ' . ($player['state'] ?? 'N/A') . ' ' . ($player['zip_5'] ?? 'N/A')) ?></dd>
+                    <dd class="col-sm-8"><?= htmlspecialchars(($user['city'] ?? 'N/A') . ', ' . ($user['state'] ?? 'N/A') . ' ' . ($user['zip_5'] ?? 'N/A')) ?></dd>
                 </dl>
             </div>
         </div>
