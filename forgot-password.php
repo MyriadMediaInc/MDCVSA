@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-require 'config/database.php';
+require 'config/Database.php'; // Corrected path
 
 $mail_config = require 'config/mail.php';
 
