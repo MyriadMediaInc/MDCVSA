@@ -62,11 +62,48 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- FIX: Reusable Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to perform this action? This cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="#" id="confirmDeleteButton" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- jQuery -->
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+
+<!-- FIX: JavaScript for dynamic modal -->
+<script>
+    // Listen for the modal being shown
+    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        // Get the button that triggered the modal
+        var button = $(event.relatedTarget);
+        // Extract the URL from the data-href attribute
+        var url = button.data('href');
+        // Get the modal itself
+        var modal = $(this);
+        // Set the href of the modal's confirm button
+        modal.find('#confirmDeleteButton').attr('href', url);
+    });
+</script>
+
 </body>
 </html>

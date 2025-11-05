@@ -52,17 +52,19 @@ $leagues = $viewData['leagues'] ?? [];
                     <?php foreach ($leagues as $league):
                         ?>
                         <tr>
-                            <!-- FIX: Use correct `league_id` column -->
                             <td><?= htmlspecialchars($league['league_id']) ?></td>
                             <td><?= htmlspecialchars($league['league_name']) ?></td>
-                            <!-- FIX: Use correct `date_formed` column -->
                             <td><?= htmlspecialchars($league['date_formed'] ? date('M j, Y', strtotime($league['date_formed'])) : 'N/A') ?></td>
-                             <!-- FIX: Use correct `date_disbanded` column -->
                             <td><?= htmlspecialchars($league['date_disbanded'] ? date('M j, Y', strtotime($league['date_disbanded'])) : 'N/A') ?></td>
                             <td>
-                                <!-- FIX: Use correct `league_id` for links -->
                                 <a href="league_edit.php?id=<?= $league['league_id'] ?>" class="btn btn-info btn-xs">Edit</a>
-                                <a href="leagues.php?action=delete&id=<?= $league['league_id'] ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this league?')">Delete</a>
+                                <!-- FIX: Modified button to trigger modal -->
+                                <button type="button" class="btn btn-danger btn-xs" 
+                                        data-toggle="modal" 
+                                        data-target="#confirmDeleteModal" 
+                                        data-href="leagues.php?action=delete&id=<?= $league['league_id'] ?>">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     <?php
