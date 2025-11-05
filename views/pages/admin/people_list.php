@@ -3,6 +3,7 @@
 
 require_once __DIR__ . '/../../../src/bootstrap.php'; // Ensure bootstrap for BASE_URL
 
+// The header now includes the BASE_URL logic, so we don't need a separate require.
 include __DIR__ . '/../../partials/header.php';
 include __DIR__ . '/../../partials/sidebar.php';
 
@@ -23,7 +24,7 @@ include __DIR__ . '/../../partials/sidebar.php';
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/mdcvsa/index.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>/public/admin/dashboard.php">Home</a></li>
                         <li class="breadcrumb-item active">People List</li>
                     </ol>
                 </div>
@@ -40,7 +41,7 @@ include __DIR__ . '/../../partials/sidebar.php';
                         <div class="card-header">
                             <h3 class="card-title">Registered People</h3>
                              <div class="card-tools">
-                                <a href="/mdcvsa/register.php" class="btn btn-success">
+                                <a href="<?php echo BASE_URL; ?>/public/register.php" class="btn btn-success">
                                     <i class="fas fa-plus"></i> Add New Person
                                 </a>
                             </div>
@@ -80,10 +81,18 @@ include __DIR__ . '/../../partials/sidebar.php';
 <!-- /.content-wrapper -->
 
 <?php
-// Corrected include path for the footer
 include __DIR__ . '/../../partials/footer.php';
 ?>
 
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+
+<!-- PAGE-SPECIFIC PLUGINS -->
 <!-- DataTables & Plugins -->
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -94,22 +103,25 @@ include __DIR__ . '/../../partials/footer.php';
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jszip/jszip.min.js"></script>
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="<?php echo BASE_.php';
-?>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-<!-- Page specific scripts -->
+
+<!-- Page-specific script -->
 <script>
 $(function () {
     var table = $('#peopleTable').DataTable({
-        // --- Server-Side Processing --- 
+        "responsive": true, 
+        "lengthChange": false, 
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "/mdcvsa/api/get_people.php", // Corrected URL
+            "url": "<?php echo BASE_URL; ?>/api/get_people.php",
             "type": "POST"
         },
-
-        // --- Column Definitions ---
         "columns": [
             { "data": "id" },
             { "data": "first_name" },
@@ -136,48 +148,32 @@ $(function () {
                 }
             },
             {
-                "data": "id", // Use the ID for the action buttons
+                "data": "id",
                 "orderable": false,
                 "searchable": false,
                 "render": function(data, type, row) {
-                    // Corrected URLs for actions
                     return `
-                        <a href="/mdcvsa/public/admin/person_view.php?id=${data}" class="btn btn-xs btn-primary" title="View"><i class="fas fa-eye"></i></a>
-                        <a href="/mdcvsa/public/admin/person_edit.php?id=${data}" class="btn btn-xs btn-info" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a href="<?php echo BASE_URL; ?>/public/admin/person_view.php?id=${data}" class="btn btn-xs btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <a href="<?php echo BASE_URL; ?>/public/admin/person_edit.php?id=${data}" class="btn btn-xs btn-info" title="Edit"><i class="fas fa-edit"></i></a>
                         <a href="#" class="btn btn-xs btn-danger" title="Delete" onclick="deletePerson(${data})"><i class="fas fa-trash"></i></a>
                     `;
                 }
             }
-        ],
-
-        // --- Layout & Features ---
-        "paging": true,
-        "lengthChange": true,
-        "searching": true, // Note: This is the simple filter box. SearchBuilder provides the advanced one.
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        "dom": 'Bfrtip', // Q=SearchBuilder, B=Buttons, f=filtering input, r=processing display, t=table, i=info, p=pagination
-        
-        // --- Buttons & Export ---
-        "buttons": [
-            'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
         ]
-
-    });
+    }).buttons().container().appendTo('#peopleTable_wrapper .col-md-6:eq(0)');
 });
 
-// Placeholder for a delete function
 function deletePerson(id) {
     if(confirm('Are you sure you want to delete person #' + id + '?')) {
-        // AJAX call to a delete script would go here
-        console.log('Deleting person', id);
-        // E.g., $.post('/mdcvsa/api/delete_person.php', { id: id }, ...);
-        // On success, you would reload the table: $('#peopleTable').DataTable().ajax.reload();
+        // Production-ready delete logic would go here
+        console.log("Attempting to delete person: ", id);
+        // Example: 
+        // $.post("<?php echo BASE_URL; ?>/api/delete_person.php", {id: id}, function(response) {
+        //     alert(response.message);
+        //     $('#peopleTable').DataTable().ajax.reload();
+        // });
     }
 }
-
 </script>
 
 </body>
