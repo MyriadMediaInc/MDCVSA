@@ -15,11 +15,10 @@ if (!$user_id) {
     exit;
 }
 
-// Fetch user and player data
+// Fetch user and player data. All data is in the 'people' table.
 $user = get_user_by_id($db, (int)$user_id);
-$player = get_player_by_user_id($db, (int)$user_id);
 
-// If the user or player can't be found, something is wrong.
+// If the user can't be found, something is wrong.
 if (!$user) {
     // Redirect to login or show an error. For now, we'll just go to login.
     header('Location: login.php');
@@ -27,6 +26,7 @@ if (!$user) {
 }
 
 $pageTitle = 'Registration Successful';
+// The view will need the $user variable, so we pass it implicitly.
 $contentView = __DIR__ . '/views/pages/registration-success.php';
 
 // Render the layout
