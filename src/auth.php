@@ -3,6 +3,7 @@
 function register_user(PDO $db, string $email, string $password, string $firstName, string $lastName): array {
     $errors = [];
 
+    // Check if email already exists
     $stmt = $db->prepare("SELECT COUNT(*) FROM people WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->fetchColumn() > 0) {
@@ -10,8 +11,9 @@ function register_user(PDO $db, string $email, string $password, string $firstNa
     }
 
     if (empty($errors)) {
+        // Use the 'password' column, not 'password_hash'
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $db->prepare("INSERT INTO people (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)");
+        $stmt = $db->prepare("INSERT INTO people (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
         $stmt->execute([$firstName, $lastName, $email, $hashedPassword]);
     }
 
@@ -19,24 +21,13 @@ function register_user(PDO $db, string $email, string $password, string $firstNa
 }
 
 function login_user(PDO $db, string $email, string $password): array {
-    $stmt = $db->prepare("SELECT id, password, password_hash FROM people WHERE email = ?");
+    // Select from the 'password' column, not 'password_hash'
+    $stmt = $db->prepare("SELECT id, password FROM people WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user) {
-        return ['Invalid email or password.'];
-    }
-
-    // Safely determine which hash to use.
-    $hash = null;
-    if (!empty($user['password_hash'])) {
-        $hash = $user['password_hash'];
-    } elseif (!empty($user['password'])) {
-        $hash = $user['password'];
-    }
-
-    // If a hash was found and the password verifies, log the user in.
-    if ($hash !== null && password_verify($password, $hash)) {
+    // If user is found and password matches the hash in the 'password' column
+    if ($user && password_verify($password, $user['password'])) {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
