@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition register-page">
-<div class="register-box">
+<div class="register-box" style="width: 460px;">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="/" class="h1"><b>MDCVSA</b></a>
@@ -25,7 +25,7 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form action="register.php" method="post">
+      <form action="register.php" method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="first_name" placeholder="First name" required>
           <div class="input-group-append">
@@ -66,7 +66,70 @@
             </div>
           </div>
         </div>
+        
+        <hr>
+        <p class="login-box-msg">Player Information</p>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+            </div>
+            <input type="text" class="form-control" name="dob" placeholder="Date of Birth (YYYY-MM-DD)" >
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="address_1" placeholder="Address">
+           <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-map-marker-alt"></span>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="city" placeholder="City">
+                   <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-city"></span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="state" placeholder="State">
+                   <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-map-pin"></span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="zip_5" placeholder="Zip Code">
+           <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-hashtag"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="govt_id_image">Government ID Scan</label>
+          <div class="input-group">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="govt_id_image" name="govt_id_image">
+              <label class="custom-file-label" for="govt_id_image">Choose file</label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-3">
           <div class="col-8">
             <div class="icheck-primary">
               <input type="checkbox" id="agreeTerms" name="terms" value="agree" required>
@@ -98,9 +161,13 @@
 <script src="vendor/almasaeed2010/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- AdminLTE App -->
 <script src="vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="vendor/almasaeed2010/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
 <script>
 $(function() {
+    bsCustomFileInput.init();
+
     // Check for PHP error messages
     <?php if (!empty($errors)): ?>
         var errorHtml = '<ul class="text-left">' +
@@ -114,20 +181,6 @@ $(function() {
             title: 'Registration Failed',
             html: errorHtml,
             confirmButtonText: 'Try Again'
-        });
-    <?php endif; ?>
-
-    // Check for PHP success message
-    <?php if (!empty($success_message)): ?>
-        Swal.fire({
-            icon: 'success',
-            title: 'Registration Successful!',
-            text: '<?php echo htmlspecialchars($success_message); ?>',
-            showConfirmButton: false,
-            timer: 2000 // Auto-close after 2 seconds
-        }).then(() => {
-            // Optionally, redirect after the alert closes
-            // window.location.href = 'login.php';
         });
     <?php endif; ?>
 });
