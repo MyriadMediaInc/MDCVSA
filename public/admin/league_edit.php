@@ -27,7 +27,8 @@ if (!$league) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $league_name = trim(filter_input(INPUT_POST, 'league_name', FILTER_SANITIZE_STRING));
+    // FIX: Replaced deprecated FILTER_SANITIZE_STRING with FILTER_SANITIZE_FULL_SPECIAL_CHARS
+    $league_name = trim(filter_input(INPUT_POST, 'league_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     $start_date = trim(filter_input(INPUT_POST, 'start_date'));
     $end_date = trim(filter_input(INPUT_POST, 'end_date'));
 
@@ -54,7 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Page-specific variables
 $pageTitle = 'Edit League';
 $contentView = __DIR__ . '/../../views/pages/admin/league_form.php';
-$formAction = 'league_edit.php?id=' . $league_id;
+
+// Pass data to the view
+$viewData = [
+    'formAction' => 'league_edit.php?id=' . $league_id,
+    'league' => $league,
+    'errors' => $errors
+];
 
 // Render the layout
 include __DIR__ . '/../../views/layouts/app.php';
