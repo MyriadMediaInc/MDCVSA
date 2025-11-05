@@ -1,1 +1,63 @@
-<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title><?php echo $pageTitle ?? \'MDCVSA Admin\'; ?></title>\n\n    <!-- Google Font: Source Sans Pro -->\n    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback\">\n    <!-- Font Awesome -->\n    <link rel=\"stylesheet\" href=\"<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css\">\n    <!-- Theme style -->\n    <link rel=\"stylesheet\" href=\"<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css\">\n</head>\n<body class=\"hold-transition sidebar-mini layout-fixed\">\n<div class=\"wrapper\">\n\n    <!-- Navbar -->\n    <?php include __DIR__ . \'/../partials/header.php\'; ?>\n    <!-- /.navbar -->\n\n    <!-- Main Sidebar Container -->\n    <?php include __DIR__ . \'/../partials/sidebar.php\'; ?>\n\n    <!-- Content Wrapper. Contains page content -->\n    <div class=\"content-wrapper\">\n        <!-- Content Header (Page header) -->\n        <div class=\"content-header\">\n            <div class=\"container-fluid\">\n                <div class=\"row mb-2\">\n                    <div class=\"col-sm-6\">\n                        <h1 class=\"m-0\"><?php echo $pageTitle ?? \'Dashboard\'; ?></h1>\n                    </div>\n                </div><!-- /.row -->\n            </div><!-- /.container-fluid -->\n        </div>\n        <!-- /.content-header -->\n\n        <!-- Main content -->\n        <section class=\"content\">\n            <div class=\"container-fluid\">\n                <div class=\"alert alert-info\">Testing layout file. If you see this, the layout is working. The error is in the content view file itself.</div>\n                <h1>Content Area</h1>\n                <p>The variable \$contentView is set to: <?php echo htmlspecialchars($contentView ?? \'Not Set\'); ?></p>\n            </div><!-- /.container-fluid -->\n        </section>\n        <!-- /.content -->\n    </div>\n    <!-- /.content-wrapper -->\n\n    <?php include __DIR__ . \'/../partials/footer.php\'; ?>\n\n</div>\n<!-- ./wrapper -->\n\n<!-- jQuery -->\n<script src=\"<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js\"></script>\n<!-- Bootstrap 4 -->\n<script src=\"<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js\"></script>\n<!-- AdminLTE App -->\n<script src=\"<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js\"></script>\n</body>\n</html>\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo $pageTitle ?? 'MDCVSA Admin'; ?></title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <?php include __DIR__ . '/../partials/header.php'; ?>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <?php include __DIR__ . '/../partials/sidebar.php'; ?>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"><?php echo $pageTitle ?? 'Dashboard'; ?></h1>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="alert alert-info">Testing layout file. If you see this, the layout is working. The error is in the content view file itself.</div>
+                <h1>Content Area</h1>
+                <p>The variable $contentView is set to: <?php echo htmlspecialchars($contentView ?? 'Not Set'); ?></p>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <?php include __DIR__ . '/../partials/footer.php'; ?>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+</body>
+</html>
