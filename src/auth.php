@@ -6,23 +6,40 @@
  * Registers a new user.
  *
  * @param PDO $pdo The database connection object.
- * @param string $fullName
+ * @param string $firstName
+ * @param string $lastName
  * @param string $email
  * @param string $password
  * @param string $passwordConfirm
+ * @param string $terms
  * @return array An array of error messages, or an empty array on success.
  */
-function register_user(PDO $pdo, string $fullName, string $email, string $password, string $passwordConfirm): array
+function register_user(PDO $pdo, string $firstName, string $lastName, string $email, string $password, string $passwordConfirm, string $terms): array
 {
     $errors = [];
 
     // 1. Validation
-    if (empty($fullName) || empty($email) || empty($password)) {
+    if (empty($firstName) || empty($lastName) || empty($email) || empty($password)) {
         $errors[] = 'All fields are required.';
+    }
+
+    if ($terms !== 'agree') {
+        $errors[] = 'You must agree to the terms and conditions.';
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Invalid email format.';
+    }
+
+    // Password strength validation
+    if (strlen($password) < 8) {
+        $errors[] = 'Password must be at least 8 characters long.';
+    }
+    if (!preg_match('/[a-zA-Z]/', $password)) {
+        $errors[] = 'Password must contain at least one letter.';
+    }
+    if (!preg_match('/\d/', $password)) {
+        $errors[] = 'Password must contain at least one number.';
     }
 
     if ($password !== $passwordConfirm) {
@@ -41,13 +58,8 @@ function register_user(PDO $pdo, string $fullName, string $email, string $passwo
         return $errors;
     }
 
-    // 3. Hash password and prepare user data
+    // 3. Hash password
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-    // Simple split of full name into first and last
-    $nameParts = explode(' ', $fullName, 2);
-    $firstName = $nameParts[0];
-    $lastName = $nameParts[1] ?? ''; // Handle cases with no last name
 
     // 4. Insert user into the database
     try {

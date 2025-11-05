@@ -83,17 +83,17 @@
 
 <script>
 $(function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('logged_out')) {
+    // Check for registration success
+    <?php if ($registration_success): ?>
         Swal.fire({
             icon: 'success',
-            title: 'Logged Out',
-            text: 'You have been successfully logged out.',
+            title: 'Registration Successful!',
+            text: 'You can now log in with your credentials.',
             confirmButtonText: 'OK'
         });
-    }
+    <?php endif; ?>
 
-    // Check for PHP error messages
+    // Check for standard PHP error messages
     <?php if (!empty($errors)): ?>
         var errorHtml = '<ul class="text-left">' +
             <?php foreach ($errors as $error): ?>
@@ -109,7 +109,7 @@ $(function() {
         });
     <?php endif; ?>
 
-    // Check for PHP success message
+    // Check for standard PHP success message (for login)
     <?php if (!empty($success_message)): ?>
         Swal.fire({
             icon: 'success',

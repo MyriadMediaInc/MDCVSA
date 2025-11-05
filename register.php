@@ -7,24 +7,24 @@ require_once __DIR__ . '/src/bootstrap.php';
 require_once __DIR__ . '/src/auth.php';
 
 $errors = [];
-$success_message = '';
 
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullName = $_POST['full_name'] ?? '';
+    $firstName = $_POST['first_name'] ?? '';
+    $lastName = $_POST['last_name'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     $passwordConfirm = $_POST['password_confirm'] ?? '';
+    $terms = $_POST['terms'] ?? '';
 
     // The register_user function returns an array of errors.
     // If the array is empty, registration was successful.
-    $errors = register_user($db, $fullName, $email, $password, $passwordConfirm);
+    $errors = register_user($db, $firstName, $lastName, $email, $password, $passwordConfirm, $terms);
 
     if (empty($errors)) {
-        $success_message = "Registration successful! You can now log in.";
-        // Optionally, you could redirect the user to the login page here
-        // header('Location: /mdcvsa/login.php');
-        // exit();
+        // On success, redirect to the login page.
+        header('Location: login.php?registered=true');
+        exit();
     }
 }
 

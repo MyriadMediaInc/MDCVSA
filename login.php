@@ -7,6 +7,12 @@ require_once __DIR__ . '/src/auth.php';
 
 $errors = [];
 $success_message = '';
+$registration_success = false; // Flag for new registration
+
+// Check if the user has just been redirected from registration
+if (isset($_GET['registered']) && $_GET['registered'] === 'true') {
+    $registration_success = true;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'] ?? '';
@@ -15,8 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = login_user($db, $email, $password);
 
     if (empty($errors)) {
-        // On successful login, we set a success message.
-        // The JavaScript will then redirect the user to the dashboard.
+        // On successful login, set the success message for redirection.
         $success_message = "Login successful! Redirecting...";
     }
 }
