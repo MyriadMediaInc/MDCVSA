@@ -26,9 +26,9 @@ function login_user(PDO $db, string $email, string $password): array {
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // First, explicitly check if a user was found.
-    if ($user) {
-        // Now that we have a user, we can safely verify the password.
+    // Check if user exists AND if the password_hash is set and not null
+    if ($user && isset($user['password_hash']) && $user['password_hash'] !== null) {
+        // Now we can safely verify the password
         if (password_verify($password, $user['password_hash'])) {
             // Password is correct, proceed with login.
             if (session_status() === PHP_SESSION_NONE) {
@@ -41,7 +41,7 @@ function login_user(PDO $db, string $email, string $password): array {
         }
     }
 
-    // If the user was not found or the password was incorrect, add a generic error.
+    // If user not found, password incorrect, or hash is missing, return a generic error.
     $errors[] = 'Invalid email or password.';
     return $errors;
 }
