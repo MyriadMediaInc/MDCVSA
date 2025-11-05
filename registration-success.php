@@ -16,8 +16,8 @@ if (!$user_id) {
 }
 
 // Fetch user and player data
-$user = find_user_by_id($db, (int)$user_id);
-$player = find_player_by_user_id($db, (int)$user_id);
+$user = get_user_by_id($db, (int)$user_id);
+$player = get_player_by_user_id($db, (int)$user_id);
 
 // If the user or player can't be found, something is wrong.
 if (!$user) {
