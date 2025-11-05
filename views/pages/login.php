@@ -82,7 +82,37 @@
 <script src="vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
 
 <script>
-// This space is reserved for the feedback script we will add later.
+$(function() {
+    // Check for PHP error messages
+    <?php if (!empty($errors)): ?>
+        var errorHtml = '<ul class="text-left">' +
+            <?php foreach ($errors as $error): ?>
+                '<li><?php echo htmlspecialchars($error); ?></li>' +
+            <?php endforeach; ?>
+        '</ul>';
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            html: errorHtml,
+            confirmButtonText: 'Try Again'
+        });
+    <?php endif; ?>
+
+    // Check for PHP success message
+    <?php if (!empty($success_message)): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'Login Successful!',
+            text: '<?php echo htmlspecialchars($success_message); ?>',
+            timer: 1500, // Auto-close after 1.5 seconds
+            showConfirmButton: false
+        }).then(() => {
+            // Redirect to the dashboard after the alert closes
+            window.location.href = 'index.php';
+        });
+    <?php endif; ?>
+});
 </script>
 
 </body>

@@ -1,5 +1,14 @@
 <?php
 
+// Start the session
+session_start();
+
+// If the user is not logged in, redirect to the login page.
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
