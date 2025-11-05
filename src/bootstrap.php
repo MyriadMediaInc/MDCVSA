@@ -10,25 +10,37 @@ if (class_exists(Dotenv::class)) {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
 } else {
-    // Handle case where Dotenv is not available
     error_log('Dotenv class not found. Please run "composer install".');
 }
 
-// --- FIX: Define BASE_URL --- //
-// This dynamically creates the base URL, so it works on any server.
-// It creates a URL like 'http://13.222.190.11/mdcvsa'
+// --- FIX: Define a robust BASE_URL --- //
+// This method is more reliable as it doesn't depend on DOCUMENT_ROOT.
+// It deduces the base path from the script's URL, which is always correct.
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
-// Assumes the entry point (e.g., index.php) is in a subdirectory of the web root.
-// dirname($_SERVER['SCRIPT_NAME']) gets the directory part of the URL.
-$script_dir = dirname($_SERVER['SCRIPT_NAME']);
-// If the script is in the root, dirname might return '/' or '\'. In that case, we want an empty string.
-$base_path = ($script_dir === '/' || $script_dir === '\\') ? '' : $script_dir;
+
+// Get the URL path of the currently executing script.
+$script_name = $_SERVER['SCRIPT_NAME']; // e.g., /mdcvsa/public/admin/leagues.php
+
+// Find the position of '/public/', which is our web root marker.
+$public_pos = strpos($script_name, '/public/');
+
+if ($public_pos !== false) {
+    // The base path is the portion of the URL before '/public/'.
+    $base_path = substr($script_name, 0, $public_pos);
+} else {
+    // Fallback for any script that might be running outside the /public directory.
+    // This is a safety measure and shouldn't normally be hit.
+    $base_path = rtrim(dirname($script_name), '/');
+}
+
+// Clean up trailing slashes for consistency.
+$base_path = rtrim($base_path, '/');
+
 define('BASE_URL', $protocol . $host . $base_path);
 // --- END FIX ---
 
 try {
-    // The autoloader knows where to find the Database class now.
     $db = Database::getInstance()->getConnection();
 } catch (\PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
