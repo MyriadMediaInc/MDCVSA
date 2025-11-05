@@ -18,7 +18,7 @@
  * @param string|null $state
  * @param string|null $zip5
  * @param array|null $govt_id_image
- * @return array An array of error messages, or an empty array on success.
+ * @return array|int An array of error messages, or the new user'''s ID on success.
  */
 function register_user(
     PDO $pdo,
@@ -34,7 +34,7 @@ function register_user(
     ?string $state,
     ?string $zip5,
     ?array $govt_id_image
-): array {
+): array|int {
     $errors = [];
 
     // --- 1. Standard Validation ---
@@ -70,13 +70,10 @@ function register_user(
     $id_image_path = null;
     if ($govt_id_image && $govt_id_image['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/../uploads/ids/';
-        
-        // Basic validation
         $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
         if (!in_array($govt_id_image['type'], $allowedTypes)) {
             $errors[] = 'Invalid file type for ID. Only JPG, PNG, and PDF are allowed.';
         }
-
         if ($govt_id_image['size'] > 5 * 1024 * 1024) { // 5 MB limit
             $errors[] = 'ID image file is too large. Maximum size is 5MB.';
         }
@@ -87,58 +84,44 @@ function register_user(
             $destination = $uploadDir . $newFilename;
 
             if (move_uploaded_file($govt_id_image['tmp_name'], $destination)) {
-                $id_image_path = 'uploads/ids/' . $newFilename; // Store relative path
+                $id_image_path = 'uploads/ids/' . $newFilename;
             } else {
                 $errors[] = 'Failed to move uploaded ID file.';
             }
         }
     }
 
-    // --- If there are any errors so far, return them ---
     if (!empty($errors)) {
         return $errors;
     }
 
-    // --- 5. Hash password ---
+    // --- 5. Hash password and Prepare new data ---
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $registration_expires_at = (new DateTime('+1 year'))->format('Y-m-d');
+    $player_type = 'Full'; // Default player type
 
     // --- 6. Insert user into the database ---
     try {
         $sql = "INSERT INTO people (
-                    first_name, 
-                    last_name, 
-                    email, 
-                    password, 
-                    dob, 
-                    address_1, 
-                    city, 
-                    state, 
-                    zip_5,
-                    id_image_path
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    first_name, last_name, email, password, dob, 
+                    address_1, city, state, zip_5, id_image_path,
+                    registration_expires_at, player_type
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $pdo->prepare($sql);
-        
         $stmt->execute([
-            $firstName,
-            $lastName,
-            $email,
-            $passwordHash,
-            empty($dob) ? null : $dob,
-            $address1,
-            $city,
-            $state,
-            $zip5,
-            $id_image_path
+            $firstName, $lastName, $email, $passwordHash, 
+            empty($dob) ? null : $dob, $address1, $city, $state, $zip5,
+            $id_image_path, $registration_expires_at, $player_type
         ]);
+
+        return (int)$pdo->lastInsertId();
 
     } catch (PDOException $e) {
         error_log($e->getMessage());
         $errors[] = 'A database error occurred during registration. Please try again later.';
         return $errors;
     }
-
-    return []; // Return empty array for success
 }
 
 /**
@@ -158,24 +141,39 @@ function login_user(PDO $pdo, string $email, string $password): array
         return $errors;
     }
 
-    // Find the user by email
     $stmt = $pdo->prepare('SELECT id, password FROM people WHERE email = ?');
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Verify user and password
     if (!$user || !password_verify($password, $user['password'])) {
         $errors[] = 'Invalid email or password.';
         return $errors;
     }
 
-    // Start session and log user in
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     $_SESSION['user_id'] = $user['id'];
-    // Regenerate session ID to prevent session fixation
     session_regenerate_id(true);
 
     return []; // Success
+}
+
+/**
+ * Fetches a user'''s complete profile by their ID.
+ *
+ * @param PDO $pdo The database connection object.
+ * @param int $userId The ID of the user to fetch.
+ * @return array|false The user'''s data as an associative array, or false if not found.
+ */
+function get_user_by_id(PDO $pdo, int $userId): array|false
+{
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM people WHERE id = ?');
+        $stmt->execute([$userId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        return false;
+    }
 }

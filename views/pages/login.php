@@ -84,7 +84,7 @@
 <script>
 $(function() {
     // Check for registration success
-    <?php if ($registration_success): ?>
+    <?php if (isset($_GET['registered']) && $_GET['registered'] === 'true'): ?>
         Swal.fire({
             icon: 'success',
             title: 'Registration Successful!',
@@ -94,32 +94,18 @@ $(function() {
     <?php endif; ?>
 
     // Check for standard PHP error messages
-    <?php if (!empty($errors)): ?>
-        var errorHtml = '<ul class="text-left">' +
-            <?php foreach ($errors as $error): ?>
-                '<li><?php echo htmlspecialchars($error); ?></li>' +
-            <?php endforeach; ?>
-        '</ul>';
-
+    <?php if (!empty($errors)):
+        $errorHtml = '<ul class="text-left">';
+        foreach ($errors as $error) {
+            $errorHtml .= '<li>' . htmlspecialchars($error) . '</li>';
+        }
+        $errorHtml .= '</ul>';
+    ?>
         Swal.fire({
             icon: 'error',
             title: 'Login Failed',
-            html: errorHtml,
+            html: '<?= $errorHtml ?>',
             confirmButtonText: 'Try Again'
-        });
-    <?php endif; ?>
-
-    // Check for standard PHP success message (for login)
-    <?php if (!empty($success_message)): ?>
-        Swal.fire({
-            icon: 'success',
-            title: 'Login Successful!',
-            text: '<?php echo htmlspecialchars($success_message); ?>',
-            timer: 1500, // Auto-close after 1.5 seconds
-            showConfirmButton: false
-        }).then(() => {
-            // Redirect to the dashboard after the alert closes
-            window.location.href = 'index.php';
         });
     <?php endif; ?>
 });
