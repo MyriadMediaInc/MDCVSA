@@ -41,15 +41,15 @@ endif; ?>
                 <label for="league_name">League Name</label>
                 <input type="text" class="form-control" id="league_name" name="league_name" placeholder="Enter league name" value="<?= htmlspecialchars($league['league_name'] ?? '') ?>" required>
             </div>
-            <!-- FIX: Use correct `date_formed` name and value -->
             <div class="form-group">
                 <label for="date_formed">Date Formed</label>
-                <input type="date" class="form-control" id="date_formed" name="date_formed" value="<?= htmlspecialchars($league['date_formed'] ?? '') ?>">
+                <!-- FIX: Added `required` attribute -->
+                <input type="date" class="form-control" id="date_formed" name="date_formed" value="<?= htmlspecialchars($league['date_formed'] ?? '') ?>" required>
             </div>
-            <!-- FIX: Use correct `date_disbanded` name and value -->
             <div class="form-group">
                 <label for="date_disbanded">Date Disbanded</label>
-                <input type="date" class="form-control" id="date_disbanded" name="date_disbanded" value="<?= htmlspecialchars($league['date_disbanded'] ?? '') ?>">
+                <!-- FIX: Added `required` attribute -->
+                <input type="date" class="form-control" id="date_disbanded" name="date_disbanded" value="<?= htmlspecialchars($league['date_disbanded'] ?? '') ?>" required>
             </div>
         </div>
         <!-- /.card-body -->

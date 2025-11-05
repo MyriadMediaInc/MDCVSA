@@ -35,8 +35,8 @@ $leagues = $viewData['leagues'] ?? [];
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>Date Formed</th>
+                    <th>Date Disbanded</th>
                     <th style="width: 150px">Actions</th>
                 </tr>
             </thead>
@@ -52,13 +52,17 @@ $leagues = $viewData['leagues'] ?? [];
                     <?php foreach ($leagues as $league):
                         ?>
                         <tr>
-                            <td><?= htmlspecialchars($league['id']) ?></td>
+                            <!-- FIX: Use correct `league_id` column -->
+                            <td><?= htmlspecialchars($league['league_id']) ?></td>
                             <td><?= htmlspecialchars($league['league_name']) ?></td>
-                            <td><?= htmlspecialchars($league['start_date'] ? date('M j, Y', strtotime($league['start_date'])) : 'N/A') ?></td>
-                            <td><?= htmlspecialchars($league['end_date'] ? date('M j, Y', strtotime($league['end_date'])) : 'N/A') ?></td>
+                            <!-- FIX: Use correct `date_formed` column -->
+                            <td><?= htmlspecialchars($league['date_formed'] ? date('M j, Y', strtotime($league['date_formed'])) : 'N/A') ?></td>
+                             <!-- FIX: Use correct `date_disbanded` column -->
+                            <td><?= htmlspecialchars($league['date_disbanded'] ? date('M j, Y', strtotime($league['date_disbanded'])) : 'N/A') ?></td>
                             <td>
-                                <a href="league_edit.php?id=<?= $league['id'] ?>" class="btn btn-info btn-xs">Edit</a>
-                                <a href="leagues.php?action=delete&id=<?= $league['id'] ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this league?')">Delete</a>
+                                <!-- FIX: Use correct `league_id` for links -->
+                                <a href="league_edit.php?id=<?= $league['league_id'] ?>" class="btn btn-info btn-xs">Edit</a>
+                                <a href="leagues.php?action=delete&id=<?= $league['league_id'] ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this league?')">Delete</a>
                             </td>
                         </tr>
                     <?php
