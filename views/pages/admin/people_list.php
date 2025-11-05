@@ -1,10 +1,16 @@
 <?php
 // views/pages/admin/people_list.php
 
-// Corrected include paths based on the project structure
+require_once __DIR__ . '/../../../src/bootstrap.php'; // Ensure bootstrap for BASE_URL
+
 include __DIR__ . '/../../partials/header.php';
 include __DIR__ . '/../../partials/sidebar.php';
+
 ?>
+<!-- DataTables-specific CSS -->
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -78,6 +84,19 @@ include __DIR__ . '/../../partials/sidebar.php';
 include __DIR__ . '/../../partials/footer.php';
 ?>
 
+<!-- DataTables & Plugins -->
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jszip/jszip.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="<?php echo BASE_.php';
+?>
+
 <!-- Page specific scripts -->
 <script>
 $(function () {
@@ -123,8 +142,8 @@ $(function () {
                 "render": function(data, type, row) {
                     // Corrected URLs for actions
                     return `
-                        <a href="/mdcvsa/admin/person_view.php?id=${data}" class="btn btn-xs btn-primary" title="View"><i class="fas fa-eye"></i></a>
-                        <a href="/mdcvsa/admin/person_edit.php?id=${data}" class="btn btn-xs btn-info" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a href="/mdcvsa/public/admin/person_view.php?id=${data}" class="btn btn-xs btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <a href="/mdcvsa/public/admin/person_edit.php?id=${data}" class="btn btn-xs btn-info" title="Edit"><i class="fas fa-edit"></i></a>
                         <a href="#" class="btn btn-xs btn-danger" title="Delete" onclick="deletePerson(${data})"><i class="fas fa-trash"></i></a>
                     `;
                 }
@@ -139,17 +158,13 @@ $(function () {
         "info": true,
         "autoWidth": false,
         "responsive": true,
-        "dom": 'QBfrtip', // Q=SearchBuilder, B=Buttons, f=filtering input, r=processing display, t=table, i=info, p=pagination
+        "dom": 'Bfrtip', // Q=SearchBuilder, B=Buttons, f=filtering input, r=processing display, t=table, i=info, p=pagination
         
         // --- Buttons & Export ---
         "buttons": [
             'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-        ],
+        ]
 
-        // --- SearchBuilder (Enhanced Search) ---
-        "searchBuilder": {
-             // Logic to add League and Team will be added later
-        }
     });
 });
 
