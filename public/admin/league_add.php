@@ -12,19 +12,23 @@ require_once __DIR__ . '/../../src/league.php';
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // FIX: Replaced deprecated FILTER_SANITIZE_STRING with FILTER_SANITIZE_FULL_SPECIAL_CHARS
+    // FIX: Use correct form field names `date_formed` and `date_disbanded`
     $league_name = trim(filter_input(INPUT_POST, 'league_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-    $start_date = trim(filter_input(INPUT_POST, 'start_date'));
-    $end_date = trim(filter_input(INPUT_POST, 'end_date'));
+    $date_formed = trim(filter_input(INPUT_POST, 'date_formed'));
+    $date_disbanded = trim(filter_input(INPUT_POST, 'date_disbanded'));
+
+    // Convert empty date strings to null for proper database insertion.
+    $date_formed = $date_formed ?: null;
+    $date_disbanded = $date_disbanded ?: null;
 
     if (empty($league_name)) {
         $errors[] = 'League name is required.';
     }
 
     if (empty($errors)) {
-        $league_id = add_league($db, $league_name, $start_date, $end_date);
+        // The add_league function now expects the corrected variable names
+        $league_id = add_league($db, $league_name, $date_formed, $date_disbanded);
         if ($league_id) {
-            // Redirect to the league list with a success message
             header('Location: leagues.php?added=true');
             exit;
         }
@@ -40,9 +44,10 @@ $contentView = __DIR__ . '/../../views/pages/admin/league_form.php';
 $viewData = [
     'formAction' => 'league_add.php',
     'league' => [
+        // FIX: Pre-fill form with correct field names on error
         'league_name' => $_POST['league_name'] ?? '',
-        'start_date' => $_POST['start_date'] ?? '',
-        'end_date' => $_POST['end_date'] ?? ''
+        'date_formed' => $_POST['date_formed'] ?? '',
+        'date_disbanded' => $_POST['date_disbanded'] ?? ''
     ],
     'errors' => $errors
 ];

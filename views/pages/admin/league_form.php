@@ -1,10 +1,14 @@
 <?php
 // This view is included by a controller (league_add.php or league_edit.php)
 // The following variables are expected to be set by the controller:
-// $errors (array of error messages)
-// $formAction (the URL the form should submit to)
-// $league (array of league data for pre-filling the form)
-// $pageTitle (the title of the page)
+// $viewData['errors'] (array of error messages)
+// $viewData['formAction'] (the URL the form should submit to)
+// $viewData['league'] (array of league data for pre-filling the form)
+
+$errors = $viewData['errors'] ?? [];
+$formAction = $viewData['formAction'] ?? '';
+$league = $viewData['league'] ?? [];
+$pageTitle = $pageTitle ?? 'League Form'; // Fallback title
 
 $submitButtonText = (strpos($formAction, 'edit') !== false) ? 'Update League' : 'Create League';
 
@@ -37,13 +41,15 @@ endif; ?>
                 <label for="league_name">League Name</label>
                 <input type="text" class="form-control" id="league_name" name="league_name" placeholder="Enter league name" value="<?= htmlspecialchars($league['league_name'] ?? '') ?>" required>
             </div>
+            <!-- FIX: Use correct `date_formed` name and value -->
             <div class="form-group">
-                <label for="start_date">Start Date</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" value="<?= htmlspecialchars($league['start_date'] ?? '') ?>">
+                <label for="date_formed">Date Formed</label>
+                <input type="date" class="form-control" id="date_formed" name="date_formed" value="<?= htmlspecialchars($league['date_formed'] ?? '') ?>">
             </div>
+            <!-- FIX: Use correct `date_disbanded` name and value -->
             <div class="form-group">
-                <label for="end_date">End Date</label>
-                <input type="date" class="form-control" id="end_date" name="end_date" value="<?= htmlspecialchars($league['end_date'] ?? '') ?>">
+                <label for="date_disbanded">Date Disbanded</label>
+                <input type="date" class="form-control" id="date_disbanded" name="date_disbanded" value="<?= htmlspecialchars($league['date_disbanded'] ?? '') ?>">
             </div>
         </div>
         <!-- /.card-body -->
