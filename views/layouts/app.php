@@ -8,9 +8,9 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -39,7 +39,17 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <?php include $contentView; ?>
+                <?php
+                if (isset($contentView) && file_exists($contentView)) {
+                    // This makes variables from the $viewData array available to the view
+                    if (isset($viewData)) {
+                        extract($viewData);
+                    }
+                    include $contentView;
+                } else {
+                    echo '<div class="alert alert-danger">Error: Content view file not specified or found.</div>';
+                }
+                ?>
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
@@ -52,10 +62,10 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
 </body>
 </html>
