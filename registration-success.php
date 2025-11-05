@@ -4,6 +4,7 @@
 
 // Basic bootstrap
 require_once __DIR__ . '/src/bootstrap.php';
+require_once __DIR__ . '/src/auth.php';
 
 // Get the user ID from the URL query parameter
 $user_id = $_GET['user_id'] ?? null;
