@@ -12,7 +12,8 @@ require_once __DIR__ . '/../../src/league.php';
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $league_name = trim(filter_input(INPUT_POST, 'league_name', FILTER_SANITIZE_STRING));
+    // FIX: Replaced deprecated FILTER_SANITIZE_STRING with FILTER_SANITIZE_FULL_SPECIAL_CHARS
+    $league_name = trim(filter_input(INPUT_POST, 'league_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     $start_date = trim(filter_input(INPUT_POST, 'start_date'));
     $end_date = trim(filter_input(INPUT_POST, 'end_date'));
 
@@ -35,13 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Add New League';
 $contentView = __DIR__ . '/../../views/pages/admin/league_form.php';
 
-// We need to pass some variables to the view
-$formAction = 'league_add.php';
-$league = [
-    'league_name' => $_POST['league_name'] ?? '',
-    'start_date' => $_POST['start_date'] ?? '',
-    'end_date' => $_POST['end_date'] ?? ''
-]; // for pre-filling form on error
+// Pass data to the view
+$viewData = [
+    'formAction' => 'league_add.php',
+    'league' => [
+        'league_name' => $_POST['league_name'] ?? '',
+        'start_date' => $_POST['start_date'] ?? '',
+        'end_date' => $_POST['end_date'] ?? ''
+    ],
+    'errors' => $errors
+];
 
 // Render the layout
 include __DIR__ . '/../../views/layouts/app.php';
