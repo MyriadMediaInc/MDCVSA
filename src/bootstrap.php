@@ -14,27 +14,30 @@ if (class_exists(Dotenv::class)) {
 }
 
 // --- FIX: Define a robust BASE_URL --- //
-// This method is more reliable as it doesn't depend on DOCUMENT_ROOT.
-// It deduces the base path from the script's URL, which is always correct.
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
 
-// Get the URL path of the currently executing script.
-$script_name = $_SERVER['SCRIPT_NAME']; // e.g., /mdcvsa/public/admin/leagues.php
+// Get the full URL to the currently executing script, without the query string.
+$current_script_url = strtok($_SERVER['REQUEST_URI'], '?');
 
-// Find the position of '/public/', which is our web root marker.
-$public_pos = strpos($script_name, '/public/');
+// Get the full filesystem path to the project's root directory (one level above this file's 'src' directory)
+$project_root_fs = dirname(__DIR__);
 
-if ($public_pos !== false) {
-    // The base path is the portion of the URL before '/public/'.
-    $base_path = substr($script_name, 0, $public_pos);
-} else {
-    // Fallback for any script that might be running outside the /public directory.
-    // This is a safety measure and shouldn't normally be hit.
-    $base_path = rtrim(dirname($script_name), '/');
-}
+// Get the full filesystem path to the currently executing script.
+$script_filename_fs = $_SERVER['SCRIPT_FILENAME'];
 
-// Clean up trailing slashes for consistency.
+// Get the script's path relative to the project root.
+// e.g., /public/admin/leagues.php
+$script_path_relative = str_replace($project_root_fs, '', $script_filename_fs);
+
+// Replace backslashes on Windows
+$script_path_relative = str_replace('\\', '/', $script_path_relative);
+
+// Deduce the base path by removing the relative script path from the full URL.
+// e.g., /mdcvsa/public/admin/leagues.php  - /public/admin/leagues.php  = /mdcvsa
+$base_path = str_replace($script_path_relative, '', $current_script_url);
+
+// Clean up any trailing slashes for consistency.
 $base_path = rtrim($base_path, '/');
 
 define('BASE_URL', $protocol . $host . $base_path);
