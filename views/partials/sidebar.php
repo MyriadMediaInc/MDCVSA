@@ -18,7 +18,7 @@ if ($isLoggedIn) {
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/public/index.php" class="brand-link">
+    <a href="/index.php" class="brand-link">
         <span class="brand-text font-weight-light">MDCVSA</span>
     </a>
 
@@ -35,7 +35,7 @@ if ($isLoggedIn) {
                 </div>
             <?php else: ?>
                 <div class="info">
-                    <a href="/public/login.php" class="d-block">Guest User</a>
+                    <a href="/login.php" class="d-block">Guest User</a>
                 </div>
             <?php endif; ?>
         </div>
@@ -44,7 +44,7 @@ if ($isLoggedIn) {
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="/public/index.php" class="nav-link active">
+                    <a href="/index.php" class="nav-link active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
@@ -59,20 +59,20 @@ if ($isLoggedIn) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/public/logout.php" class="nav-link">
+                        <a href="/logout.php" class="nav-link">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>Logout</p>
                         </a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a href="/public/register.php" class="nav-link">
+                        <a href="/register.php" class="nav-link">
                             <i class="nav-icon fas fa-user-plus"></i>
                             <p>Register</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/public/login.php" class="nav-link">
+                        <a href="/login.php" class="nav-link">
                             <i class="nav-icon fas fa-sign-in-alt"></i>
                             <p>Login</p>
                         </a>
