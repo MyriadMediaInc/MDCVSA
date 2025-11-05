@@ -26,25 +26,23 @@ function login_user(PDO $db, string $email, string $password): array {
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && password_verify($password, $user['password_hash'])) {
-        // On successful password verification, start the session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+    // First, explicitly check if a user was found.
+    if ($user) {
+        // Now that we have a user, we can safely verify the password.
+        if (password_verify($password, $user['password_hash'])) {
+            // Password is correct, proceed with login.
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            session_regenerate_id(true);
+            $_SESSION['user_id'] = $user['id'];
+
+            return []; // Return empty array to signify success
         }
-        
-        // Regenerate session ID to prevent session fixation
-        session_regenerate_id(true);
-
-        // Store user ID in session
-        $_SESSION['user_id'] = $user['id'];
-
-        // Return an empty errors array to signify success
-        return []; 
-    } else {
-        // If user not found or password incorrect
-        $errors[] = 'Invalid email or password.';
     }
 
+    // If the user was not found or the password was incorrect, add a generic error.
+    $errors[] = 'Invalid email or password.';
     return $errors;
 }
 
@@ -60,10 +58,8 @@ function logout_user() {
         session_start();
     }
     
-    // Unset all session variables
     $_SESSION = [];
     
-    // Destroy the session
     session_destroy();
 }
 
