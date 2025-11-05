@@ -26,11 +26,20 @@ function login_user(PDO $db, string $email, string $password): array {
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Check if user exists AND if the password_hash is set and not null
-    if ($user && isset($user['password_hash']) && $user['password_hash'] !== null) {
-        // Now we can safely verify the password
-        if (password_verify($password, $user['password_hash'])) {
-            // Password is correct, proceed with login.
+    if ($user) {
+        $hash = null;
+        // Check for the primary hash column first.
+        if (isset($user['password_hash']) && $user['password_hash'] !== null) {
+            $hash = $user['password_hash'];
+        } 
+        // Fallback to check the older 'password' column if the primary is not set.
+        elseif (isset($user['password']) && $user['password'] !== null) {
+            $hash = $user['password'];
+        }
+
+        // Only if we found a valid hash, we proceed to verify it.
+        if ($hash !== null && password_verify($password, $hash)) {
+            // On successful verification, start the session.
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
@@ -41,7 +50,7 @@ function login_user(PDO $db, string $email, string $password): array {
         }
     }
 
-    // If user not found, password incorrect, or hash is missing, return a generic error.
+    // If user not found, password incorrect, or no valid hash was found, return a generic error.
     $errors[] = 'Invalid email or password.';
     return $errors;
 }
