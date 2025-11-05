@@ -83,6 +83,16 @@
 
 <script>
 $(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('logged_out')) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Logged Out',
+            text: 'You have been successfully logged out.',
+            confirmButtonText: 'OK'
+        });
+    }
+
     // Check for PHP error messages
     <?php if (!empty($errors)): ?>
         var errorHtml = '<ul class="text-left">' +
