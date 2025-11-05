@@ -40,14 +40,15 @@
         <section class="content">
             <div class="container-fluid">
                 <?php
-                if (isset($contentView) && file_exists($contentView)) {
-                    // This makes variables from the $viewData array available to the view
-                    if (isset($viewData)) {
-                        extract($viewData);
-                    }
-                    include $contentView;
+                // Check if the content view is valid. If not, display an error.
+                if (!isset($contentView) || !file_exists($contentView)) {
+                    echo '<div class="alert alert-danger"><strong>Error:</strong> Content view file is not defined or cannot be found.</div>';
                 } else {
-                    echo '<div class="alert alert-danger">Error: Content view file not specified or found.</div>';
+                    // The leagues controller passes data in $viewData, which the view itself extracts.
+                    // Other controllers may define variables directly in the global scope.
+                    // By including in this else block, we ensure we are in the main script scope,
+                    // so all variables are accessible.
+                    include $contentView;
                 }
                 ?>
             </div><!-- /.container-fluid -->
