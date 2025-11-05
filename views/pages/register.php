@@ -25,101 +25,89 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
+      <?php if (!empty($errors)): ?>
+        <div class="alert alert-danger">
+            <p class="mb-0">Please fix the following errors:</p>
+            <ul class="mb-0">
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+      <?php endif; ?>
+
       <form action="register.php" method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="first_name" placeholder="First name" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
+          <input type="text" class="form-control" name="first_name" placeholder="First name" required value="<?php echo htmlspecialchars($_POST['first_name'] ?? ''); ?>">
+          <div class="input-group-append"><div class="input-group-text"><span class="fas fa-user"></span></div></div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="last_name" placeholder="Last name" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
+          <input type="text" class="form-control" name="last_name" placeholder="Last name" required value="<?php echo htmlspecialchars($_POST['last_name'] ?? ''); ?>">
+          <div class="input-group-append"><div class="input-group-text"><span class="fas fa-user"></span></div></div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" name="email" placeholder="Email" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
+          <input type="email" class="form-control" name="email" placeholder="Email" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+          <div class="input-group-append"><div class="input-group-text"><span class="fas fa-envelope"></span></div></div>
         </div>
         <div class="input-group mb-3">
           <input type="password" class="form-control" name="password" placeholder="Password" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
+          <div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div>
         </div>
         <div class="input-group mb-3">
           <input type="password" class="form-control" name="password_confirm" placeholder="Retype password" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
+          <div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div>
         </div>
         
         <hr>
-        <p class="login-box-msg">Player Information</p>
+        <p class="login-box-msg">Personal Information</p>
 
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-            </div>
-            <input type="text" class="form-control" name="dob" placeholder="Date of Birth (YYYY-MM-DD)" >
+            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-calendar-alt"></i></span></div>
+            <input type="text" class="form-control" name="dob" placeholder="Date of Birth (YYYY-MM-DD)" required value="<?php echo htmlspecialchars($_POST['dob'] ?? ''); ?>">
         </div>
 
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="address_1" placeholder="Address">
-           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-map-marker-alt"></span>
-            </div>
-          </div>
+            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
+            <input type="tel" class="form-control" name="phone" placeholder="Phone Number (Optional)" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="address_1" placeholder="Street Address" required value="<?php echo htmlspecialchars($_POST['address_1'] ?? ''); ?>">
+           <div class="input-group-append"><div class="input-group-text"><span class="fas fa-map-marker-alt"></span></div></div>
+        </div>
+        
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="address_2" placeholder="Apartment, Suite, Unit, etc. (Optional)" value="<?php echo htmlspecialchars($_POST['address_2'] ?? ''); ?>">
+           <div class="input-group-append"><div class="input-group-text"><span class="fas fa-map-marker-alt"></span></div></div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="city" placeholder="City" required value="<?php echo htmlspecialchars($_POST['city'] ?? ''); ?>">
+           <div class="input-group-append"><div class="input-group-text"><span class="fas fa-city"></span></div></div>
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="city" placeholder="City">
-                   <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-city"></span>
-                    </div>
-                  </div>
+                  <input type="text" class="form-control" name="state" placeholder="State" required value="<?php echo htmlspecialchars($_POST['state'] ?? ''); ?>">
+                   <div class="input-group-append"><div class="input-group-text"><span class="fas fa-map-pin"></span></div></div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="state" placeholder="State">
-                   <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-map-pin"></span>
-                    </div>
-                  </div>
+                  <input type="text" class="form-control" name="zip_5" placeholder="Zip Code" required value="<?php echo htmlspecialchars($_POST['zip_5'] ?? ''); ?>">
+                   <div class="input-group-append"><div class="input-group-text"><span class="fas fa-hashtag"></span></div></div>
                 </div>
             </div>
+        </div>
+         <div class="input-group mb-3">
+          <input type="text" class="form-control" name="zip_4" placeholder="Zip+4 (Optional)" value="<?php echo htmlspecialchars($_POST['zip_4'] ?? ''); ?>">
+           <div class="input-group-append"><div class="input-group-text"><span class="fas fa-hashtag"></span></div></div>
         </div>
 
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" name="zip_5" placeholder="Zip Code">
-           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-hashtag"></span>
-            </div>
-          </div>
-        </div>
 
         <div class="form-group">
-          <label for="govt_id_image">Government ID Scan</label>
+          <label for="govt_id_image">Government ID Scan (Optional)</label>
           <div class="input-group">
             <div class="custom-file">
               <input type="file" class="custom-file-input" id="govt_id_image" name="govt_id_image">
@@ -168,20 +156,9 @@
 $(function() {
     bsCustomFileInput.init();
 
-    // Check for PHP error messages
+    // Check for PHP error messages passed from the controller
     <?php if (!empty($errors)): ?>
-        var errorHtml = '<ul class="text-left">' +
-            <?php foreach ($errors as $error): ?>
-                '<li><?php echo htmlspecialchars($error); ?></li>' +
-            <?php endforeach; ?>
-        '</ul>';
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Registration Failed',
-            html: errorHtml,
-            confirmButtonText: 'Try Again'
-        });
+        // This block is no longer needed if using the inline display method above
     <?php endif; ?>
 });
 </script>
