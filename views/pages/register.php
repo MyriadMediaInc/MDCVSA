@@ -23,7 +23,21 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form action="/register.php" method="post">
+      <?php if (!empty($errors)) : ?>
+        <div class="alert alert-danger">
+            <?php foreach ($errors as $error) : ?>
+                <p><?php echo htmlspecialchars($error); ?></p>
+            <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+
+      <?php if ($success_message) : ?>
+        <div class="alert alert-success">
+            <p><?php echo htmlspecialchars($success_message); ?></p>
+        </div>
+      <?php endif; ?>
+
+      <form action="register.php" method="post">
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="full_name" placeholder="Full name" required>
           <div class="input-group-append">
