@@ -1,43 +1,25 @@
 <?php
-session_start();
-require_once 'config/bootstrap.php';
 
-// If the user is already logged in, redirect them to the dashboard
-if (isset($_SESSION['user_id'])) {
-    header("Location: /index.php");
-    exit;
-}
+// login.php
 
-$error = null;
-$page = 'login';
-$title = 'Login';
-$body_class = 'login-page'; // Special class for AdminLTE login layout
+require_once __DIR__ . '/src/bootstrap.php';
+require_once __DIR__ . '/src/auth.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? null;
-    $password = $_POST['password'] ?? null;
+$errors = [];
+$success_message = '';
 
-    if ($email && $password) {
-        // Find the user by email
-        // NOTE: We will need to implement the findByEmail method in the Person model
-        $person = $entityManager->getRepository('Person')->findOneBy(['email' => $email]);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-        if ($person && password_verify($password, $person->getPasswordHash())) {
-            // Password is correct, start a new session
-            $_SESSION['user_id'] = $person->getPersonId();
-            $_SESSION['user_name'] = $person->getFirstName();
+    $errors = login_user($db, $email, $password);
 
-            // Redirect to the main dashboard page
-            header("Location: /index.php");
-            exit;
-        } else {
-            // Invalid credentials
-            $error = "Invalid email or password.";
-        }
-    } else {
-        $error = "Email and password are required.";
+    if (empty($errors)) {
+        // On successful login, we set a success message.
+        // The JavaScript will then redirect the user to the dashboard.
+        $success_message = "Login successful! Redirecting...";
     }
 }
 
-// The layout.php file will render the header, footer, and the login page content
-require_once 'views/layout.php';
+// The view logic will be in a separate file
+include __DIR__ . '/views/pages/login.php';

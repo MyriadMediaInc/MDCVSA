@@ -63,3 +63,40 @@ function register_user(PDO $pdo, string $fullName, string $email, string $passwo
 
     return []; // Return empty array for success
 }
+
+/**
+ * Logs in a user.
+ *
+ * @param PDO $pdo The database connection object.
+ * @param string $email
+ * @param string $password
+ * @return array An array of error messages, or an empty array on success.
+ */
+function login_user(PDO $pdo, string $email, string $password): array
+{
+    $errors = [];
+
+    if (empty($email) || empty($password)) {
+        $errors[] = 'Email and password are required.';
+        return $errors;
+    }
+
+    // Find the user by email
+    $stmt = $pdo->prepare('SELECT id, password FROM people WHERE email = ?');
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Verify user and password
+    if (!$user || !password_verify($password, $user['password'])) {
+        $errors[] = 'Invalid email or password.';
+        return $errors;
+    }
+
+    // Start session and log user in
+    session_start();
+    $_SESSION['user_id'] = $user['id'];
+    // Regenerate session ID to prevent session fixation
+    session_regenerate_id(true);
+
+    return []; // Success
+}
