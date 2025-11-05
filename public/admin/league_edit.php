@@ -27,16 +27,16 @@ if (!$league) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
+    $league_name = trim(filter_input(INPUT_POST, 'league_name', FILTER_SANITIZE_STRING));
     $start_date = trim(filter_input(INPUT_POST, 'start_date'));
     $end_date = trim(filter_input(INPUT_POST, 'end_date'));
 
-    if (empty($name)) {
+    if (empty($league_name)) {
         $errors[] = 'League name is required.';
     }
 
     if (empty($errors)) {
-        $success = update_league($db, $league_id, $name, $start_date, $end_date);
+        $success = update_league($db, $league_id, $league_name, $start_date, $end_date);
         if ($success) {
             // Redirect to the league list with a success message
             header('Location: leagues.php?updated=true');
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // If there was an error, repopulate the league array from POST data to show changes
-    $league['name'] = $name;
+    $league['league_name'] = $league_name;
     $league['start_date'] = $start_date;
     $league['end_date'] = $end_date;
 }

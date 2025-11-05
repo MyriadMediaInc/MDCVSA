@@ -10,16 +10,20 @@ $submitButtonText = (strpos($formAction, 'edit') !== false) ? 'Update League' : 
 
 ?>
 
-<?php if (!empty($errors)): ?>
+<?php if (!empty($errors)):
+    ?>
     <div class="alert alert-danger" role="alert">
         <strong>Oh snap!</strong>
         <ul>
-            <?php foreach ($errors as $error): ?>
+            <?php foreach ($errors as $error):
+                ?>
                 <li><?= htmlspecialchars($error) ?></li>
-            <?php endforeach; ?>
+            <?php
+            endforeach; ?>
         </ul>
     </div>
-<?php endif; ?>
+<?php
+endif; ?>
 
 <div class="card card-primary">
     <div class="card-header">
@@ -30,8 +34,8 @@ $submitButtonText = (strpos($formAction, 'edit') !== false) ? 'Update League' : 
     <form action="<?= htmlspecialchars($formAction) ?>" method="POST">
         <div class="card-body">
             <div class="form-group">
-                <label for="name">League Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter league name" value="<?= htmlspecialchars($league['name'] ?? '') ?>" required>
+                <label for="league_name">League Name</label>
+                <input type="text" class="form-control" id="league_name" name="league_name" placeholder="Enter league name" value="<?= htmlspecialchars($league['league_name'] ?? '') ?>" required>
             </div>
             <div class="form-group">
                 <label for="start_date">Start Date</label>

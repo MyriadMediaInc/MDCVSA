@@ -12,16 +12,16 @@ require_once __DIR__ . '/../../src/league.php';
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
+    $league_name = trim(filter_input(INPUT_POST, 'league_name', FILTER_SANITIZE_STRING));
     $start_date = trim(filter_input(INPUT_POST, 'start_date'));
     $end_date = trim(filter_input(INPUT_POST, 'end_date'));
 
-    if (empty($name)) {
+    if (empty($league_name)) {
         $errors[] = 'League name is required.';
     }
 
     if (empty($errors)) {
-        $league_id = add_league($db, $name, $start_date, $end_date);
+        $league_id = add_league($db, $league_name, $start_date, $end_date);
         if ($league_id) {
             // Redirect to the league list with a success message
             header('Location: leagues.php?added=true');
@@ -33,13 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Page-specific variables
 $pageTitle = 'Add New League';
-$contentView = __DIR__ . '/../../views/pages/admin/league_form.php'; // We can reuse a single form for add/edit
+$contentView = __DIR__ . '/../../views/pages/admin/league_form.php';
 
 // We need to pass some variables to the view
 $formAction = 'league_add.php';
-$formMethod = 'POST';
 $league = [
-    'name' => $_POST['name'] ?? '',
+    'league_name' => $_POST['league_name'] ?? '',
     'start_date' => $_POST['start_date'] ?? '',
     'end_date' => $_POST['end_date'] ?? ''
 ]; // for pre-filling form on error

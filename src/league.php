@@ -12,24 +12,24 @@ function get_league_by_id(PDO $db, int $id): ?array {
     return $league ?: null;
 }
 
-function add_league(PDO $db, string $name, ?string $start_date, ?string $end_date): bool {
+function add_league(PDO $db, string $league_name, ?string $start_date, ?string $end_date): bool {
     try {
         $stmt = $db->prepare(
             "INSERT INTO leagues (league_name, start_date, end_date) VALUES (?, ?, ?)"
         );
-        return $stmt->execute([$name, $start_date, $end_date]);
+        return $stmt->execute([$league_name, $start_date, $end_date]);
     } catch (PDOException $e) {
         error_log("Error creating league: " . $e->getMessage());
         return false;
     }
 }
 
-function update_league(PDO $db, int $id, string $name, ?string $start_date, ?string $end_date): bool {
+function update_league(PDO $db, int $id, string $league_name, ?string $start_date, ?string $end_date): bool {
     try {
         $stmt = $db->prepare(
             "UPDATE leagues SET league_name = ?, start_date = ?, end_date = ? WHERE id = ?"
         );
-        return $stmt->execute([$name, $start_date, $end_date, $id]);
+        return $stmt->execute([$league_name, $start_date, $end_date, $id]);
     } catch (PDOException $e) {
         error_log("Error updating league: " . $e->getMessage());
         return false;
