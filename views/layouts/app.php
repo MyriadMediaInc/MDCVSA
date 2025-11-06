@@ -1,3 +1,25 @@
+<?php
+// Centralized bootstrap and authentication logic.
+// This is the single source of truth for application setup.
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Load core application logic, database, BASE_URL, and auth functions.
+// This makes them globally available to all pages that use this layout.
+require_once __DIR__ . '/../../src/bootstrap.php';
+require_once __DIR__ . '/../../src/auth.php';
+
+// Globally check login status and fetch user data for header/sidebar.
+$isLoggedIn = isset($_SESSION['user_id']);
+$user = null;
+if ($isLoggedIn) {
+    // The get_user_by_id function and $db variable come from the files required above.
+    $user = get_user_by_id($db, $_SESSION['user_id']);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,45 +37,25 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-    <!-- Navbar -->
+    <!-- The header and sidebar partials will now have access to the variables defined above -->
     <?php include __DIR__ . '/../partials/header.php'; ?>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
     <?php include __DIR__ . '/../partials/sidebar.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0"><?php echo $pageTitle ?? 'Dashboard'; ?></h1>
-                    </div>
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <?php
-                // Check if the content view is valid. If not, display an error.
-                if (!isset($contentView) || !file_exists($contentView)) {
-                    echo '<div class="alert alert-danger"><strong>Error:</strong> Content view file is not defined or cannot be found.</div>';
-                } else {
-                    // If view-specific data exists, extract it for the view to use
-                    if (isset($viewData) && is_array($viewData)) {
-                        extract($viewData);
-                    }
-                    include $contentView;
-                }
-                ?>
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+        <?php
+        // The content view is included by the individual page controllers (e.g., public/index.php)
+        // That controller is responsible for setting the $contentView variable.
+        if (!isset($contentView) || !file_exists($contentView)) {
+            echo '<div class="container-fluid"><div class="alert alert-danger"><strong>Error:</strong> Page content not found.</div></div>';
+        } else {
+            // If the controller passed any view-specific data, extract it so the view can use it.
+            if (isset($viewData) && is_array($viewData)) {
+                extract($viewData);
+            }
+            include $contentView;
+        }
+        ?>
     </div>
     <!-- /.content-wrapper -->
 
@@ -62,48 +64,12 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- FIX: Reusable Confirmation Modal -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Action</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to perform this action? This cannot be undone.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a href="#" id="confirmDeleteButton" class="btn btn-danger">Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- jQuery -->
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
-
-<!-- FIX: JavaScript for dynamic modal -->
-<script>
-    // Listen for the modal being shown
-    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-        // Get the button that triggered the modal
-        var button = $(event.relatedTarget);
-        // Extract the URL from the data-href attribute
-        var url = button.data('href');
-        // Get the modal itself
-        var modal = $(this);
-        // Set the href of the modal's confirm button
-        modal.find('#confirmDeleteButton').attr('href', url);
-    });
-</script>
 
 </body>
 </html>

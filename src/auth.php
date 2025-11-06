@@ -137,11 +137,6 @@ function register_user(
     }
 }
 
-
-/*
- * The functions below are unchanged.
- */
-
 function login_user(PDO $db, string $email, string $password): array {
     try {
         $stmt = $db->prepare("SELECT id, password FROM people WHERE email = ? AND deleted_at IS NULL AND status = 'active'");
@@ -176,6 +171,74 @@ function get_user_by_id(PDO $db, int $id): ?array {
     }
 }
 
+/**
+ * Updates a user's profile information in the database.
+ *
+ * @param PDO $db The database connection object.
+ * @param int $id The ID of the user to update.
+ * @param array $data An associative array of data to update (e.g., ['first_name' => 'John']).
+ * @return bool|array Returns true on success, or an array of errors on failure.
+ */
+function update_user(PDO $db, int $id, array $data): bool|array {
+    $errors = [];
+
+    // 1. Validation (optional but recommended)
+    if (empty($data['first_name'])) { $errors[] = 'First name is required.'; }
+    if (empty($data['last_name'])) { $errors[] = 'Last name is required.'; }
+    if (empty($data['email'])) { $errors[] = 'Email is required.'; }
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Invalid email format.';
+    }
+
+    // Check if the new email is already in use by another user
+    try {
+        $stmt = $db->prepare("SELECT id FROM people WHERE email = ? AND id != ?");
+        $stmt->execute([$data['email'], $id]);
+        if ($stmt->fetch()) {
+            $errors[] = 'This email address is already in use by another account.';
+        }
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        $errors[] = 'Database error while checking for email uniqueness.';
+    }
+
+    if (!empty($errors)) {
+        return $errors;
+    }
+
+    // 2. Build the SQL query dynamically
+    $allowed_fields = ['first_name', 'last_name', 'email', 'dob', 'status']; // Add other fields as needed
+    $set_clauses = [];
+    $params = [];
+
+    foreach ($allowed_fields as $field) {
+        if (isset($data[$field])) {
+            $set_clauses[] = "{$field} = :{$field}";
+            $params[$field] = $data[$field];
+        }
+    }
+
+    if (empty($set_clauses)) {
+        return ['No valid data provided for update.'];
+    }
+
+    $sql = "UPDATE people SET " . implode(', ', $set_clauses) . " WHERE id = :id";
+    $params['id'] = $id;
+
+    // 3. Execute the update
+    try {
+        $stmt = $db->prepare($sql);
+        if ($stmt->execute($params)) {
+            return true; // Success
+        }
+        return ['Database error: Could not update user.'];
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        return ['A database error occurred during the update.'];
+    }
+}
+
+
 function logout_user() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -194,5 +257,3 @@ function logout_user() {
     
     session_destroy();
 }
-
-?>
