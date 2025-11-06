@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="<?php echo BASE_URL; ?>/public/index.php" class="brand-link">
+    <a href="http://13.222.190.11/mdcvsa/public/index.php" class="brand-link">
         <span class="brand-text font-weight-light">MDCVSA</span>
     </a>
 
@@ -15,7 +15,7 @@
                     if ($isLoggedIn && $user) {
                         echo htmlspecialchars($user['name']);
                     } else {
-                        echo 'Guest / <a href="/mdcvsa/public/login.php">Login</a>';
+                        echo 'Guest / <a href="http://13.222.190.11/mdcvsa/public/login.php">Login</a>';
                     }
                     ?>
                 </a>
@@ -29,7 +29,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?php echo BASE_URL; ?>/public/index.php" class="nav-link">
+                    <a href="http://13.222.190.11/mdcvsa/public/index.php" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -40,7 +40,7 @@
                 <?php if ($isLoggedIn): ?>
                     <li class="nav-header">USER</li>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/logout.php" class="nav-link">
+                        <a href="http://13.222.190.11/mdcvsa/public/logout.php" class="nav-link">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>Logout</p>
                         </a>
@@ -48,13 +48,13 @@
                 <?php else: ?>
                     <li class="nav-header">USER</li>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/register.php" class="nav-link">
+                        <a href="http://13.222.190.11/mdcvsa/public/register.php" class="nav-link">
                             <i class="nav-icon fas fa-user-plus"></i>
                             <p>Register</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/login.php" class="nav-link">
+                        <a href="http://13.222.190.11/mdcvsa/public/login.php" class="nav-link">
                             <i class="nav-icon fas fa-sign-in-alt"></i>
                             <p>Login</p>
                         </a>
@@ -62,10 +62,11 @@
                 <?php endif; ?>
 
                 <!-- Show Admin section only if user is logged in and is an admin -->
-                <?php if ($isLoggedIn && isset($user['is_admin']) && $user['is_admin']): ?>
+                <?php if ($isLoggedIn && isset($user['is_admin']) && $user['is_admin']):
+                ?>
                     <li class="nav-header">ADMIN</li>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/admin/people_list.php" class="nav-link">
+                        <a href="http://13.222.190.11/mdcvsa/public/admin/people_list.php" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>People</p>
                         </a>

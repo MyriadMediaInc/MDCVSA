@@ -7,20 +7,17 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
-  <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
+  <!-- Absolute Paths for Assets -->
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box" style="width: 460px;">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="<?php echo BASE_URL; ?>/" class="h1"><b>MDCVSA</b></a>
+      <a href="http://13.222.190.11/mdcvsa/public/index.php" class="h1"><b>MDCVSA</b></a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
@@ -36,7 +33,7 @@
         </div>
       <?php endif; ?>
 
-      <form action="<?php echo BASE_URL; ?>/public/register.php" method="post" enctype="multipart/form-data">
+      <form action="http://13.222.190.11/mdcvsa/public/register.php" method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="first_name" placeholder="First name" required value="<?php echo htmlspecialchars($_POST['first_name'] ?? ''); ?>">
           <div class="input-group-append"><div class="input-group-text"><span class="fas fa-user"></span></div></div>
@@ -134,32 +131,23 @@
         </div>
       </form>
 
-      <a href="<?php echo BASE_URL; ?>/public/login.php" class="text-center">I already have a membership</a>
+      <a href="http://13.222.190.11/mdcvsa/public/login.php" class="text-center">I already have a membership</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
 </div>
 <!-- /.register-box -->
 
-<!-- jQuery -->
-<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- SweetAlert2 -->
-<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="<?php echo BASE_URL; ?>/vendor/almasaeed2010/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- Absolute Paths for Scripts -->
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
 <script>
 $(function() {
     bsCustomFileInput.init();
-
-    // Check for PHP error messages passed from the controller
-    <?php if (!empty($errors)): ?>
-        // This block is no longer needed if using the inline display method above
-    <?php endif; ?>
 });
 </script>
 

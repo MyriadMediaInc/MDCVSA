@@ -7,18 +7,16 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
+  <!-- Absolute Paths for Assets -->
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="/" class="h1"><b>MDCVSA</b></a>
+      <a href="http://13.222.190.11/mdcvsa/public/index.php" class="h1"><b>MDCVSA</b></a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
@@ -31,7 +29,8 @@
           </div>
       <?php endif; ?>
 
-      <form action="login.php" method="post">
+      <!-- Absolute URL for form action -->
+      <form action="http://13.222.190.11/mdcvsa/public/login.php" method="post">
         <div class="input-group mb-3">
             <input type="email" class="form-control" placeholder="Email" name="email" required>
             <div class="input-group-append">
@@ -66,7 +65,8 @@
       </form>
 
       <p class="mb-0">
-        <a href="register.php" class="text-center">Register a new membership</a>
+        <!-- Absolute URL for registration link -->
+        <a href="http://13.222.190.11/mdcvsa/public/register.php" class="text-center">Register a new membership</a>
       </p>
     </div>
     <!-- /.card-body -->
@@ -75,11 +75,9 @@
 </div>
 <!-- /.login-box -->
 
-<!-- jQuery -->
-<script src="vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+<!-- Absolute Paths for Scripts -->
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
 </body>
 </html>
