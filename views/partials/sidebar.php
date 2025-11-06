@@ -6,7 +6,7 @@
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="<?php echo BASE_URL; ?>/public/index.php" class="brand-link">
+    <a href="<?php echo BASE_URL; ?>/index.php" class="brand-link">
         <span class="brand-text font-weight-light">MDCVSA</span>
     </a>
 
@@ -24,7 +24,7 @@
                 </div>
             <?php else: ?>
                 <div class="info">
-                    <a href="<?php echo BASE_URL; ?>/public/login.php" class="d-block">Guest / Login</a>
+                    <a href="<?php echo BASE_URL; ?>/login.php" class="d-block">Guest / Login</a>
                 </div>
             <?php endif; ?>
         </div>
@@ -33,7 +33,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="<?php echo BASE_URL; ?>/public/index.php" class="nav-link">
+                    <a href="<?php echo BASE_URL; ?>/index.php" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
@@ -42,13 +42,13 @@
                 <?php if ($isLoggedIn && isset($user['is_admin']) && $user['is_admin'] == 1): ?>
                     <li class="nav-header">ADMINISTRATION</li>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/admin/leagues.php" class="nav-link">
+                        <a href="<?php echo BASE_URL; ?>/admin/leagues.php" class="nav-link">
                             <i class="nav-icon fas fa-trophy"></i>
                             <p>Leagues</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/admin/people_list.php" class="nav-link">
+                        <a href="<?php echo BASE_URL; ?>/admin/people_list.php" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>People</p>
                         </a>
@@ -58,20 +58,20 @@
                  <li class="nav-header">USER</li>
                  <?php if ($isLoggedIn): ?>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/logout.php" class="nav-link">
+                        <a href="<?php echo BASE_URL; ?>/logout.php" class="nav-link">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>Logout</p>
                         </a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/register.php" class="nav-link">
+                        <a href="<?php echo BASE_URL; ?>/register.php" class="nav-link">
                             <i class="nav-icon fas fa-user-plus"></i>
                             <p>Register</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo BASE_URL; ?>/public/login.php" class="nav-link">
+                        <a href="<?php echo BASE_URL; ?>/login.php" class="nav-link">
                             <i class="nav-icon fas fa-sign-in-alt"></i>
                             <p>Login</p>
                         </a>
