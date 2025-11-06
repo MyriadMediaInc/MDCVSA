@@ -15,6 +15,7 @@ error_reporting(E_ALL);
 // Basic bootstrap
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/bootstrap.php';
+require_once __DIR__ . '/../src/auth.php'; // Added to provide auth functions for the sidebar
 
 // Page-specific variables
 $pageTitle = 'Dashboard';
