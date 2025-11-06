@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once 'database.php';
+require_once __DIR__ . '/database.php';
 
 // The base URL of the application.
 // This is used to create absolute URLs for assets and links.
