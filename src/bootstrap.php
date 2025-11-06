@@ -16,31 +16,11 @@ if (class_exists(Dotenv::class)) {
 // --- FIX: Define a robust BASE_URL --- //
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
+// This is the path from the web server's document root to the project's public folder.
+// In the URL http://13.222.190.11/mdcvsa/public/index.php, the base project path is /mdcvsa
+$base_project_path = '/mdcvsa'; // Hardcoded for reliability
 
-// Get the full URL to the currently executing script, without the query string.
-$current_script_url = strtok($_SERVER['REQUEST_URI'], '?');
-
-// Get the full filesystem path to the project's root directory (one level above this file's 'src' directory)
-$project_root_fs = dirname(__DIR__);
-
-// Get the full filesystem path to the currently executing script.
-$script_filename_fs = $_SERVER['SCRIPT_FILENAME'];
-
-// Get the script's path relative to the project root.
-// e.g., /public/admin/leagues.php
-$script_path_relative = str_replace($project_root_fs, '', $script_filename_fs);
-
-// Replace backslashes on Windows
-$script_path_relative = str_replace('\\', '/', $script_path_relative);
-
-// Deduce the base path by removing the relative script path from the full URL.
-// e.g., /mdcvsa/public/admin/leagues.php  - /public/admin/leagues.php  = /mdcvsa
-$base_path = str_replace($script_path_relative, '', $current_script_url);
-
-// Clean up any trailing slashes for consistency.
-$base_path = rtrim($base_path, '/');
-
-define('BASE_URL', $protocol . $host . $base_path);
+define('BASE_URL', $protocol . $host . $base_project_path);
 // --- END FIX ---
 
 try {
