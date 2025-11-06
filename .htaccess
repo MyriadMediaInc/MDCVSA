@@ -1,1 +1,10 @@
-SetEnv APP_BASE_PATH /mdcvsa
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /mdcvsa/
+
+    # Redirect all requests to the public directory
+    RewriteRule ^$ public/ [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
