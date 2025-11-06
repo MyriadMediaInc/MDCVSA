@@ -14,13 +14,10 @@ if (class_exists(Dotenv::class)) {
 }
 
 // --- FIX: Define a robust BASE_URL --- //
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
-$host = $_SERVER['HTTP_HOST'];
-
-// Read the base path from the server's environment variable, with a fallback for safety.
-$base_project_path = getenv('APP_BASE_PATH') ?: '/mdcvsa'; 
-
-define('BASE_URL', $protocol . $host . $base_project_path);
+// The web server's DocumentRoot is pointed to the /public directory.
+// The project itself is accessed via the /mdcvsa path.
+// Therefore, the BASE_URL must be exactly this.
+define('BASE_URL', 'http://13.222.190.11/mdcvsa');
 // --- END FIX ---
 
 try {
