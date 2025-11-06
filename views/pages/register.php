@@ -7,11 +7,11 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Absolute Paths for Assets -->
-  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
+  <!-- **DEFINITIVE FIX**: Use the new, real asset path. -->
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box" style="width: 460px;">
@@ -138,12 +138,12 @@
 </div>
 <!-- /.register-box -->
 
-<!-- Absolute Paths for Scripts -->
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- **DEFINITIVE FIX**: Use the new, real asset path. -->
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
 <script>
 $(function() {

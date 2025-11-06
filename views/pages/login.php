@@ -7,10 +7,10 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Absolute Paths for Assets -->
-  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
+  <!-- **DEFINITIVE FIX**: Use the new, real asset path. -->
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -29,7 +29,6 @@
           </div>
       <?php endif; ?>
 
-      <!-- Absolute URL for form action -->
       <form action="http://13.222.190.11/mdcvsa/public/login.php" method="post">
         <div class="input-group mb-3">
             <input type="email" class="form-control" placeholder="Email" name="email" required>
@@ -65,7 +64,6 @@
       </form>
 
       <p class="mb-0">
-        <!-- Absolute URL for registration link -->
         <a href="http://13.222.190.11/mdcvsa/public/register.php" class="text-center">Register a new membership</a>
       </p>
     </div>
@@ -75,9 +73,9 @@
 </div>
 <!-- /.login-box -->
 
-<!-- Absolute Paths for Scripts -->
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="http://13.222.190.11/mdcvsa/public/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+<!-- **DEFINITIVE FIX**: Use the new, real asset path. -->
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="http://13.222.190.11/mdcvsa/public/assets/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
 </body>
 </html>
