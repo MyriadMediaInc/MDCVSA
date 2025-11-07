@@ -1,3 +1,12 @@
 <?php
 
-echo '<h1>Framework Ready</h1><p>The new application structure and front controller are working correctly.</p>';
+// Load Core Application Configuration
+require_once __DIR__ . '/../config/app.php';
+
+// Load Database Configuration and Connection
+require_once __DIR__ . '/../src/Database.php';
+
+
+// For now, we will just load the main layout
+// Later, this will be handled by a router
+require_once __DIR__ . '/../src/views/layouts/main.php';
