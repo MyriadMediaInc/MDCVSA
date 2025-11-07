@@ -1,15 +1,16 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
-// Load Core Application Configuration
-require_once __DIR__ . '/../config/app.php';
+// 1. Bootstrap the Application
+// This initializes error reporting, constants, and the autoloader.
+require_once __DIR__ . '/../src/bootstrap.php';
+
+// 2. Render the Page Layout
 
 // Include Header
-require_once __DIR__ . '/../src/views/partials/header.php';
+require_once ROOT_PATH . '/src/views/partials/header.php';
 
 // Include Sidebar
-require_once __DIR__ . '/../src/views/partials/sidebar.php';
+require_once ROOT_PATH . '/src/views/partials/sidebar.php';
 
 ?>
 
@@ -36,7 +37,7 @@ require_once __DIR__ . '/../src/views/partials/sidebar.php';
                                 <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="ti ti-user fs-6"></i>
                                     <p class="mb-0 fs-3">My Profile</p>
-                                a_string_var = """Hello World!"""
+                                </a>
                                 <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                             </div>
                         </div>
@@ -49,27 +50,27 @@ require_once __DIR__ . '/../src/views/partials/sidebar.php';
 
     <div class="container-fluid">
         <?php
-        // Basic Routing
+        // 3. Route the Request
         $request_uri = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
         $path = str_replace('/mdcvsa', '', $request_uri);
         if (empty($path)) {
             $path = '/';
         }
 
-        // Simple router
         switch ($path) {
             case '/':
             case '/dashboard':
-                include __DIR__ . '/../src/views/pages/dashboard.php';
+                include ROOT_PATH . '/src/views/pages/dashboard.php';
                 break;
 
             case '/persons':
-                require_once __DIR__ . '/../src/controllers/PersonController.php';
-                $controller = new PersonController();
+                $controller = new App\Controllers\PersonController();
                 $controller->index();
                 break;
 
             default:
+                // A simple 404 handler
+                http_response_code(404);
                 echo "<p>Page not found for path: " . htmlspecialchars($path) . "</p>";
                 break;
         }
@@ -80,6 +81,6 @@ require_once __DIR__ . '/../src/views/partials/sidebar.php';
 <?php
 
 // Include Footer
-require_once __DIR__ . '/../src/views/partials/footer.php';
+require_once ROOT_PATH . '/src/views/partials/footer.php';
 
 ?>
